@@ -5,7 +5,7 @@ const app = express()
 const server = http.createServer(app)
 const port = process.env.PORT
 
-server.listen(port, function() {
+server.listen(port, () => {
     console.log(`BACKEND is running on port ${port}.`)
 })
 
