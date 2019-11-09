@@ -30,12 +30,13 @@ export default class Home extends React.PureComponent<any, any> {
     }
 
     render() {
-        const { pokemon } = this.state
+        const { pokemon, hasToken } = this.state
         return (
             <SafeAreaView style={styles.container}>
-                <Image source={logo} />
+                <Image style={styles.logo} source={logo} />
                     <View style={styles.MainContainer}>
-                </View>
+                        <Text>{ hasToken ? "NÓIS" : "VISH" }</Text>
+                    </View>
             </SafeAreaView>
         )  
     }        
@@ -47,9 +48,9 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   logo: {
-    height: 32,
+    height: 150,
     resizeMode: 'contain',
     alignSelf: 'center',
-    marginTop: 10,
+    marginTop: 30,
   },
 })
