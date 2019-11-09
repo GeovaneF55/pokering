@@ -1,3 +1,6 @@
-const server = require('./config/server')
+require('dotenv').config()
 require('./config/database')
-require('./config/routes')(server)
+const server = require('./config/server')
+const socketio = require('./config/socketio')
+
+socketio(server)

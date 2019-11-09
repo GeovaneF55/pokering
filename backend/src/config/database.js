@@ -1,7 +1,16 @@
 const mongoose = require('mongoose')
+
+const mongoUser = process.env.MONGO_USER
+const mongoPass = process.env.MONGO_PASS
+
 mongoose.Promise = global.Promise
-module.exports = mongoose.connect('mongodb://localhost/pokering'
-    , { useNewUrlParser: true })
+module.exports = mongoose.connect(
+    `mongodb+srv://${mongoUser}:${mongoPass}@cluster0-iqvtj.mongodb.net/test?retryWrites=true&w=majority`,
+    { 
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }
+)
 
 mongoose.Error.messages.general.required = "O atributo '{PATH}' é obrigatório."
 mongoose.Error.messages.Number.min = 
