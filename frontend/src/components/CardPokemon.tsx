@@ -48,15 +48,15 @@ const styles = StyleSheet.create ({
         justifyContent: 'center'
     },
     card: {
-        borderWidth: 3,
+        borderWidth: 2,
         borderRadius: 3,
         borderColor: '#000',
-        width: 200,
-        height: 250,
-        padding: 10
+        width: 350,
+        height: 400,
+        padding: 5
     },
     cardImage: {
-        height: 260,
+        height: 250,
     },
     padlock: {
         height: 50,
