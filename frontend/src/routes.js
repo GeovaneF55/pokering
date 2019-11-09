@@ -1,7 +1,6 @@
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation'
 
 import Home from './pages/Home'
-
 
 const Routes = createAppContainer(
     createSwitchNavigator({
@@ -9,4 +8,4 @@ const Routes = createAppContainer(
     })
 );
 
-export default Routes;
+export default Routes
