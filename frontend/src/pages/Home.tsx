@@ -24,7 +24,7 @@ export default class Home extends React.PureComponent<any, any> {
         }
 
         console.log('batata')
-        this.socket = io('http://192.168.0.105:3003')
+        this.socket = io('http://192.168.0.103:3040')
         this.setListeners()
     }
 
@@ -64,7 +64,10 @@ export default class Home extends React.PureComponent<any, any> {
         return (
             <SafeAreaView style={styles.container}>
                 <Image style={styles.logo} source={logo} />
-                <CardPokemon />
+                <CardPokemon  
+                    pokemon={pokemon}
+                    hasToken={hasToken}
+                />
                 <View style={styles.MainContainer}>
                     <Text>{ hasToken ? "NÓIS" : "VISH" }</Text>
                 </View>

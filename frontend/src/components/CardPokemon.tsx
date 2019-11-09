@@ -5,25 +5,33 @@ import { Image,
          Text,
          TouchableOpacity,
          View, } from 'react-native'
+import { any } from 'prop-types'
 
+this.state = {
+    pokemon: 'http://i.imgur.com/91AR0Lo.jpg',
+}
 
 const capturePokemon = () => {
     alert("Pokémon Captured!")
+    this.state = {
+        pokemon: 'https://loremflickr.com/320/240'
+    }
 }
-function CardPokemon({ pokemon }, isLocked) {
+function CardPokemon({ pokemon , hasToken }) {
 
     return ( 
         <View style={styles.container}>
             <View
                 style={styles.card}
             >
-                <Image source={{uri: 'http://i.imgur.com/91AR0Lo.jpg'}} style={styles.cardImage} />
+                <Image source={{uri: this.state.pokemon }} style={styles.cardImage} />
                 <View>
                     <Image 
-                        source={ (isLocked) ? require('../assets/locked_padlock.png') :
-                            require('../assets/unlocked_padlock.png') }
+                        source={ (hasToken) ? require('../assets/unlocked_padlock.png') :
+                            require('../assets/locked_padlock.png') }
                         style={styles.padlock}                
                     />
+                    <Text style={styles.pokeName}> Catassalto </Text>
                     <TouchableOpacity 
                         activeOpacity={ .5 } 
                         onPress={ capturePokemon }  
@@ -50,7 +58,7 @@ const styles = StyleSheet.create ({
         borderRadius: 3,
         borderColor: '#000',
         width: 300,
-        height: 300,
+        height: 320,
         padding: 10
     },
     cardImage: {
@@ -59,16 +67,25 @@ const styles = StyleSheet.create ({
     padlock: {
         position: 'absolute',
         left: 0,
-        top: 1,
+        top: 5,
         height: 50,
         width: 50,
     },
     pokeball: {
         position: 'absolute',
+        top: 0,
         right: 0,
-        top: 1,
         height: 50,
         width: 50,
+    },
+    pokeName: {
+        position: 'absolute',
+        marginTop: 15,
+        left: 70,
+        alignContent: 'center',
+        fontWeight: 'bold',
+        fontSize: 24,
+        color: '#333',
     },
 })
 
