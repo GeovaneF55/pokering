@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { withNavigation } from 'react-navigation'
 import { Image,
          StyleSheet,
          Text,
@@ -38,6 +39,6 @@ const styles = StyleSheet.create ({
         borderRadius: 2,
         marginTop: 15,
     },
-    
-    
 })
+
+export default withNavigation(CardPokemon);
