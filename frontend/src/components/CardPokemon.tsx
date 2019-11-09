@@ -6,7 +6,11 @@ import { Image,
          TouchableOpacity,
          View, } from 'react-native'
 
-function CardPokemon({ pokemon }) {
+
+const capturePokemon = () => {
+    alert("Pokémon Captured!")
+}
+function CardPokemon({ pokemon }, isLocked) {
 
     return ( 
         <View style={styles.container}>
@@ -15,6 +19,20 @@ function CardPokemon({ pokemon }) {
             >
                 <Image source={{uri: 'http://i.imgur.com/91AR0Lo.jpg'}} style={styles.cardImage} />
                 <View>
+                <Image 
+                    source={ (isLocked) ? require('../assets/locked_padlock.png') :
+                        require('../assets/unlocked_padlock.png') }
+                    style={styles.padlock}                
+                />
+                <TouchableOpacity 
+                    activeOpacity={ .5 } 
+                    onPress={capturePokemon} 
+                >                    
+                    <Image 
+                        source={ require('../assets/pokeball.jpg') }
+                        style={styles.pokeball}                
+                    />
+                </TouchableOpacity>
                     <Text style={styles.textLeft}>Rabbit, 10</Text>
                     <Text style={styles.textRight}>1 Connection</Text>
                 </View>
@@ -25,18 +43,30 @@ function CardPokemon({ pokemon }) {
 
 const styles = StyleSheet.create ({
     container: {
-        marginTop: 30,
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
     card: {
         borderWidth: 3,
         borderRadius: 3,
         borderColor: '#000',
-        width: 300,
-        height: 300,
+        width: 200,
+        height: 250,
         padding: 10
     },
     cardImage: {
         height: 260,
+    },
+    padlock: {
+        height: 50,
+        width: 50,
+        alignSelf: 'flex-start'
+    },
+    pokeball: {
+        height: 50,
+        width: 50,
+        alignSelf: 'flex-end'
     },
     textLeft: {
         position: 'absolute',
