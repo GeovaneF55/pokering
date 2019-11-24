@@ -12,6 +12,8 @@ import logo from '../assets/logo.png'
 
 YellowBox.ignoreWarnings([ 'Unrecognized WebSocket' ])
 
+const backend = 'ws://pokering.herokuapp.com'
+
 export default class Home extends React.PureComponent<any, any> {
     socket: any
 
@@ -24,7 +26,7 @@ export default class Home extends React.PureComponent<any, any> {
         }
 
         console.log('batata')
-        this.socket = io('http://192.168.0.105:3003')
+        this.socket = io(backend)
         this.setListeners()
     }
 
