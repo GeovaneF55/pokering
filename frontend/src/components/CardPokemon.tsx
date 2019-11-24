@@ -1,37 +1,32 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { withNavigation } from 'react-navigation'
 import { Image,
          StyleSheet,
          Text,
          TouchableOpacity,
          View, } from 'react-native'
-import { any } from 'prop-types'
-
-this.state = {
-    pokemon: 'http://i.imgur.com/91AR0Lo.jpg',
-}
-
-const capturePokemon = () => {
-    alert("Pokémon Captured!")
-    this.state = {
-        pokemon: 'https://loremflickr.com/320/240'
+function CardPokemon({ pokemon, hasToken, socket }) {    
+    const capturePokemon = () => {
+        if ( hasToken ) {
+            alert("Pokémon Captured!")
+            socket.emit('captured')
+        } else {
+            alert("This is not your turn!")
+        }                  
     }
-}
-function CardPokemon({ pokemon , hasToken }) {
-
     return ( 
         <View style={styles.container}>
             <View
                 style={styles.card}
             >
-                <Image source={{uri: this.state.pokemon }} style={styles.cardImage} />
+                <Image source={{uri: pokemon.url }} style={styles.cardImage} />
                 <View>
                     <Image 
                         source={ (hasToken) ? require('../assets/unlocked_padlock.png') :
                             require('../assets/locked_padlock.png') }
                         style={styles.padlock}                
                     />
-                    <Text style={styles.pokeName}> Catassalto </Text>
+                    <Text style={styles.pokeName}> {pokemon.name} </Text>
                     <TouchableOpacity 
                         activeOpacity={ .5 } 
                         onPress={ capturePokemon }  
@@ -59,7 +54,7 @@ const styles = StyleSheet.create ({
         borderColor: '#000',
         width: 300,
         height: 320,
-        padding: 10
+        padding: 10,
     },
     cardImage: {
         height: 250,
@@ -72,9 +67,8 @@ const styles = StyleSheet.create ({
         width: 50,
     },
     pokeball: {
-        position: 'absolute',
         top: 0,
-        right: 0,
+        left: 220,
         height: 50,
         width: 50,
     },
