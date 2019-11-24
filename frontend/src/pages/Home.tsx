@@ -50,6 +50,7 @@ export default class Home extends React.PureComponent<any, any> {
         if (nextAppState.match(/inactive|background/)) {
             console.log('WAS INACTIVE')
             this.socket.disconnect()
+            this.setState({ hasToken: false })
             return
         }
         

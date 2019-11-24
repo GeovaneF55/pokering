@@ -1,45 +1,64 @@
 const socketio = require('socket.io')
 
 let pokemon = 'Bulbassalto'
-let users = []
+let nodes = []
+let mapIndex = new Map()
 let current = 0
 
 const timeout = 5000
 const moveToken = () => {
-    if (users.length <= 1) {
+    if (nodes.length <= 1) {
         return
     }
 
     const last = current
-    console.log("LENGTH:", users.length)
-    current = (current + 1) % users.length
+    console.log("LENGTH:", nodes.length)
+    current = (current + 1) % nodes.length
 
-    users[last].emit('token', false)
-    users[current].emit('token', true)
+    console.log('LAST:', last, '\tCURRENT:', current)
+    nodes.forEach(u => console.log(u.id))
+
+    nodes[last].emit('token', false)
+    nodes[current].emit('token', true)
 }
 
 module.exports = server => {
     const io = socketio(server)
 
     io.on('connection', socket => {
-        users.push(socket)
+        nodes.push(socket)
         socket.emit('pokemon', pokemon)
 
-        let index = users.length - 1
+        let index = nodes.length - 1
+        mapIndex.set(socket.id, index)
+
         console.log('CONECTADO:', socket.id)
 
         socket.once('disconnect', () => {
             console.log('DISCONNECT BABY:', socket.id)
-            users.splice(index, 1)
+            const isTokenOwner = socket === nodes[current]
+
+            // Remove the node and update the mapIndex.
+            nodes.splice(mapIndex.get(socket.id), 1)
+            console.log('ID SENDO DELETADO:', socket.id)
+            for (const [ key, value ] of mapIndex) {
+                console.log(key + " = " + value)
+            }
+
+            nodes.forEach(n => console.log(n.id))
+            mapIndex.delete(socket.id)
+            nodes.forEach((i, n) => mapIndex.set(n, i))
 
             // Send token to the next node if the current was the disconnected one.
-            if (socket == users[current]) {
-                current %= users.length
-                users[current].emit('token', true)
+            console.log(current, isTokenOwner, nodes.length)
+            if (isTokenOwner && nodes.length > 0) {
+                current %= nodes.length
+                console.log(current, isTokenOwner, nodes.length, nodes[current].id)
+                nodes[current].emit('token', true)
             }
         })
 
-        if (users.length <= 1) {
+        if (nodes.length <= 1) {
             socket.emit('token', true)
             return
         }
