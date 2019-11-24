@@ -19,12 +19,12 @@ export default class Home extends React.PureComponent<any, any> {
         super(props)
         this.state = { 
             connected: false,
-            pokemon: '',
+            pokemon: {},
             hasToken: false,
         }
 
         console.log('batata')
-        this.socket = io('http://192.168.0.103:3040')
+        this.socket = io('http://192.168.0.105:3003')
         this.setListeners()
     }
 
@@ -48,14 +48,13 @@ export default class Home extends React.PureComponent<any, any> {
 
     handleAppStateChange = (nextAppState) => {
         if (nextAppState.match(/inactive|background/)) {
-            console.log('WAS INACTIVE')
             this.socket.disconnect()
+            this.setState({ hasToken: false })
             return
         }
-        
-        console.log('AND NOW... ACTIVEEEEEEE')
-        this.socket = io('http://192.168.0.105:3003')
-        this.setListeners()
+        // this.socket = io('http://192.168.0.105:3003')
+        // this.setListeners()
+        this.socket.connect()
 
     }
 
@@ -67,9 +66,9 @@ export default class Home extends React.PureComponent<any, any> {
                 <CardPokemon  
                     pokemon={pokemon}
                     hasToken={hasToken}
+                    socket={this.socket}
                 />
                 <View style={styles.MainContainer}>
-                    <Text>{ hasToken ? "NÓIS" : "VISH" }</Text>
                 </View>
             </SafeAreaView>
         )  
