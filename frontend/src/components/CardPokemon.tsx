@@ -1,13 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { withNavigation } from 'react-navigation'
-import { Button,
-         Image,
+import { Image,
          StyleSheet,
          Text,
          TouchableOpacity,
          View, } from 'react-native'
-import { any } from 'prop-types'
-
 function CardPokemon({ pokemon, hasToken, socket }) {    
     const capturePokemon = () => {
         if ( hasToken ) {
